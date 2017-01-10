@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <title>Ответственное хранение</title>
+
+        <link rel="stylesheet" href="css/styles.css" />
+        <link rel="stylesheet" href="js/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="js/slick/slick.css" />
+
+        <script src="js/jquery-2.2.4.min.js"></script>
+        <script src="js/jquery.maskedinput.min.js"></script>
+        <script src="js/validation/jquery.validate.min.js"></script>
+        <script src="js/validation/messages_ru.js"></script>
+        <script src="js/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="js/slick/slick.min.js"></script>
+        <script src="js/tools.js"></script>
+
+        <meta name="viewport" content="width=device-width" />
+    </head>
+
+    <body>
+
+        <!-- wrapper -->
+        <div class="wrapper">
+            <div class="wrapper-inner">
+
+                <nav>
+                    <ul>
+                        <li><a href="#">О компании<span></span></a></li>
+                        <li class="active"><a href="#">География</a></li>
+                        <li><a href="#">Складские услуги</a></li>
+                        <li><a href="#">Филиалы</a></li>
+                        <li><a href="#">Фотогалерея</a></li>
+                        <li><a href="#">Контакты</a></li>
+                    </ul>
+                </nav>
+
+                <header class="header-inverse">
+                    <div class="logo">
+                        <a href="#">
+                            <img src="images/logo.png" alt="" width="71" height="67" />
+                            <div class="logo-title">Ответственное хранение</div>
+                            <div class="logo-subtitle">от Москвы до Владивостока</div>
+                        </a>
+                    </div>
+
+                    <div class="header-address">г. Москва, ул.Искры, д. 33 «А» <strong>/</strong> <a href="#">Адреса</a></div>
+
+                    <div class="header-phone">+7 (800) 500-14-70</div>
+
+                </header>
+
+                <!-- bg -->
+                <div class="bg map-geography">
+                    <div class="map-geography-menu">
+                        <ul>
+                            <li class="active"><a href="#">Россия</a></li>
+                            <li><a href="#">Москва и область</a></li>
+                            <li><a href="#">Другой город<span></span></a></li>
+                        </ul>
+                    </div>
+                    <div class="map-geography-content" id="map-big"></div>
+                    <script src="http://api-maps.yandex.ru/2.1/?load=package.full&lang=ru-RU" type="text/javascript"></script>
+                    <script>
+
+                        var offices = [
+                                        [55.69489,  37.461921,  'windows/popup.html', 'ПБ «Очаково»'],
+                                        [56.025824, 37.430696,  'windows/popup.html', 'МС «Лобня»'],
+                                        [53.240258, 50.298218,  'windows/popup.html', 'МО, Ж/Д СТ. СЕЛЯТИНО, МС «ТАМАНЬ»'],
+                                        [55.864076, 37.649894,  'windows/popup.html', 'МС «СВИБЛОВО»'],
+                                        [47.256962, 39.625711,  'windows/popup.html', 'Г. РОСТОВ-НА-ДОНУ, ОМС №2']
+                                      ];
+
+                        ymaps.ready(init);
+
+                        var myMap;
+
+                        function init() {
+                            myMap = new ymaps.Map('map-big', {
+                                center: [51.229373, 58.475214],
+                                zoom: 5,
+                                controls: []
+                            });
+
+                            myMap.controls.add('zoomControl', {position: {left: 'auto', right: 10, top: 108}});
+                            myMap.behaviors.disable('scrollZoom');
+
+                            var MyBalloonLayout = ymaps.templateLayoutFactory.createClass(
+                                '<div class="popover">' +
+                                    '<a class="close" href="#"></a>' +
+                                    '$[[options.contentLayout]]' +
+                                '</div>', {
+                                    build: function() {
+                                        this.constructor.superclass.build.call(this);
+                                        this._$element = $('.popover', this.getParentElement());
+                                        this.applyElementOffset();
+                                        this._$element.find('.close')
+                                            .on('click', $.proxy(this.onCloseClick, this));
+                                    },
+
+                                    clear: function() {
+                                        this._$element.find('.close')
+                                            .off('click');
+                                        this.constructor.superclass.clear.call(this);
+                                    },
+
+                                    onSublayoutSizeChange: function() {
+                                        MyBalloonLayout.superclass.onSublayoutSizeChange.apply(this, arguments);
+                                        if (!this._isElement(this._$element)) {
+                                            return;
+                                        }
+                                        this.applyElementOffset();
+                                        this.events.fire('shapechange');
+                                    },
+
+                                    applyElementOffset: function() {
+                                        this._$element.css({
+                                            left: 48,
+                                            top: -30
+                                    });
+                                },
+
+                                onCloseClick: function(e) {
+                                    e.preventDefault();
+                                    this.events.fire('userclose');
+                                },
+
+                                getShape: function () {
+                                    if (!this._isElement(this._$element)) {
+                                        return MyBalloonLayout.superclass.getShape.call(this);
+                                    }
+
+                                    var position = this._$element.position();
+
+                                    return new ymaps.shape.Rectangle(new ymaps.geometry.pixel.Rectangle([
+                                        [position.left, position.top], [
+                                            position.left + this._$element[0].offsetWidth,
+                                            position.top + this._$element[0].offsetHeight
+                                        ]
+                                    ]));
+                                },
+
+                                _isElement: function(element) {
+                                    return element && element[0];
+                                }
+                            });
+
+                            var MyBalloonContentLayout = ymaps.templateLayoutFactory.createClass(
+                                '$[properties.balloonContent]'
+                            );
+
+                            for (var i = 0; i < offices.length; i++) {
+                                var curItem = offices[i];
+                                var myPlacemark = new ymaps.Placemark([curItem[0], curItem[1]], {
+                                    hintContent: curItem[3],
+                                    balloonLink: curItem[2],
+                                    balloonContent: '<div class="popup"><h3>Идет загрузка данных...</h3></div>'
+                                }, {
+                                    balloonShadow: false,
+                                    balloonLayout: MyBalloonLayout,
+                                    balloonContentLayout: MyBalloonContentLayout,
+                                    hideIconOnBalloonOpen: false,
+                                    balloonPanelMaxMapArea: 0,
+                                    iconLayout: 'default#image',
+                                    iconImageHref: 'images/map-icon-big.png',
+                                    iconImageSize: [70, 70],
+                                    iconImageOffset: [-35, -35]
+                                });
+                                myPlacemark.events.add('balloonopen', function(e) {
+                                    var curPlacemark = e.get('target');
+                                    curPlacemark.options.set('iconImageHref', 'images/map-icon-big-hover.png');
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: curPlacemark.properties.get('balloonLink'),
+                                        dataType: 'html',
+                                        cache: false
+                                    }).done(function(html) {
+                                        curPlacemark.properties.set('balloonContent', html);
+                                    });
+                                });
+                                myPlacemark.events.add('balloonclose', function(e) {
+                                    var curPlacemark = e.get('target');
+                                    curPlacemark.options.set('iconImageHref', 'images/map-icon-big.png');
+                                });
+                                myMap.geoObjects.add(myPlacemark);
+                            }
+                        }
+                    </script>
+                    <img src="images/bg-border.png" alt="" class="bg-border" />
+                </div>
+                <!-- bg END -->
+
+                <!-- geography header -->
+                <div class="geography-header"></div>
+                <!-- geography header END -->
+
+                <!-- content -->
+                <div class="content">
+
+                    <!-- geography list -->
+                    <div class="geography-list">
+                        <!-- geography item -->
+                        <div class="geography-item">
+                            <div class="geography-item-content">
+                                <div class="geography-item-title"><a href="#">ПБ «Очаково»</a></div>
+                                <div class="geography-item-cols">
+                                    <div class="geography-item-col">
+                                        <div class="geography-item-info">
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Телефон</div>
+                                                <div class="geography-item-info-value">+7 (495) 442-1250</div>
+                                            </div>
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Адрес</div>
+                                                <div class="geography-item-info-value">119530, г. Москва, Очаковское шоссе, д. 3 «А»</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="geography-item-col">
+                                        <div class="geography-item-info">
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Общая полезной площадь</div>
+                                                <div class="geography-item-info-value">6 241 м&sup2;</div>
+                                            </div>
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Открытая площадка</div>
+                                                <div class="geography-item-info-value">1 950 м&sup2;</div>
+                                            </div>
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Офисные помещения</div>
+                                                <div class="geography-item-info-value">354 м&sup2;</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="geography-item-link"><a href="#">связаться</a></div>
+                            </div>
+                            <div class="geography-item-map">
+                                <div class="geography-item-map-inner" id="map1"></div>
+                                <script>
+
+                                    ymaps.ready(init1);
+
+                                    var myMap1;
+
+                                    function init1() {
+                                        myMap1 = new ymaps.Map('map1', {
+                                            center: [55.69489, 37.461921],
+                                            zoom: 16,
+                                            controls: []
+                                        });
+
+                                        myMap1.behaviors.disable('scrollZoom');
+
+                                        var myPlacemark = new ymaps.Placemark([55.69489, 37.461921], {}, {
+                                            iconLayout: 'default#image',
+                                            iconImageHref: 'images/map-icon.png',
+                                            iconImageSize: [41, 41],
+                                            iconImageOffset: [-20, -20]
+                                        });
+                                        myMap1.geoObjects.add(myPlacemark);
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                        <!-- geography item END -->
+
+                        <!-- geography item -->
+                        <div class="geography-item">
+                            <div class="geography-item-content">
+                                <div class="geography-item-title"><a href="#">МС «Лобня»</a></div>
+                                <div class="geography-item-cols">
+                                    <div class="geography-item-col">
+                                        <div class="geography-item-info">
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Телефон</div>
+                                                <div class="geography-item-info-value">+7 (495) 442-1250</div>
+                                            </div>
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Адрес</div>
+                                                <div class="geography-item-info-value">141730, Московская обл., г.Лобня, ул.Лейтенанта Бойко</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="geography-item-col">
+                                        <div class="geography-item-info">
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Общая полезной площадь</div>
+                                                <div class="geography-item-info-value">6 241 м&sup2;</div>
+                                            </div>
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Открытая площадка</div>
+                                                <div class="geography-item-info-value">1 950 м&sup2;</div>
+                                            </div>
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Офисные помещения</div>
+                                                <div class="geography-item-info-value">354 м&sup2;</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="geography-item-link"><a href="#">связаться</a></div>
+                            </div>
+                            <div class="geography-item-map">
+                                <div class="geography-item-map-inner" id="map2"></div>
+                                <script>
+
+                                    ymaps.ready(init2);
+
+                                    var myMap2;
+
+                                    function init2() {
+                                        myMap2 = new ymaps.Map('map2', {
+                                            center: [56.025824, 37.430696],
+                                            zoom: 16,
+                                            controls: []
+                                        });
+
+                                        myMap2.behaviors.disable('scrollZoom');
+
+                                        var myPlacemark = new ymaps.Placemark([56.025824, 37.430696], {}, {
+                                            iconLayout: 'default#image',
+                                            iconImageHref: 'images/map-icon.png',
+                                            iconImageSize: [41, 41],
+                                            iconImageOffset: [-20, -20]
+                                        });
+                                        myMap2.geoObjects.add(myPlacemark);
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                        <!-- geography item END -->
+
+                        <!-- geography item -->
+                        <div class="geography-item">
+                            <div class="geography-item-content">
+                                <div class="geography-item-title"><a href="#">МО, Ж/Д СТ. СЕЛЯТИНО, МС «ТАМАНЬ»</a></div>
+                                <div class="geography-item-cols">
+                                    <div class="geography-item-col">
+                                        <div class="geography-item-info">
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Телефон</div>
+                                                <div class="geography-item-info-value">+7 (495) 442-1250</div>
+                                            </div>
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Адрес</div>
+                                                <div class="geography-item-info-value">443017, г. Самара, ул.&nbsp;Товарная, д.25</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="geography-item-col">
+                                        <div class="geography-item-info">
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Общая полезной площадь</div>
+                                                <div class="geography-item-info-value">6 241 м&sup2;</div>
+                                            </div>
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Открытая площадка</div>
+                                                <div class="geography-item-info-value">1 950 м&sup2;</div>
+                                            </div>
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Офисные помещения</div>
+                                                <div class="geography-item-info-value">354 м&sup2;</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="geography-item-link"><a href="#">связаться</a></div>
+                            </div>
+                            <div class="geography-item-map">
+                                <div class="geography-item-map-inner" id="map3"></div>
+                                <script>
+
+                                    ymaps.ready(init3);
+
+                                    var myMap3;
+
+                                    function init3() {
+                                        myMap3 = new ymaps.Map('map3', {
+                                            center: [53.240258, 50.298218],
+                                            zoom: 16,
+                                            controls: []
+                                        });
+
+                                        myMap3.behaviors.disable('scrollZoom');
+
+                                        var myPlacemark = new ymaps.Placemark([53.240258, 50.298218], {}, {
+                                            iconLayout: 'default#image',
+                                            iconImageHref: 'images/map-icon.png',
+                                            iconImageSize: [41, 41],
+                                            iconImageOffset: [-20, -20]
+                                        });
+                                        myMap3.geoObjects.add(myPlacemark);
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                        <!-- geography item END -->
+
+                        <!-- geography item -->
+                        <div class="geography-item">
+                            <div class="geography-item-content">
+                                <div class="geography-item-title"><a href="#">МС «СВИБЛОВО»</a></div>
+                                <div class="geography-item-cols">
+                                    <div class="geography-item-col">
+                                        <div class="geography-item-info">
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Телефон</div>
+                                                <div class="geography-item-info-value">+7 (495) 442-1250</div>
+                                            </div>
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Адрес</div>
+                                                <div class="geography-item-info-value">129344, г.Москва, ул.Искры, д.33 "А"</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="geography-item-col">
+                                        <div class="geography-item-info">
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Общая полезной площадь</div>
+                                                <div class="geography-item-info-value">6 241 м&sup2;</div>
+                                            </div>
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Открытая площадка</div>
+                                                <div class="geography-item-info-value">1 950 м&sup2;</div>
+                                            </div>
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Офисные помещения</div>
+                                                <div class="geography-item-info-value">354 м&sup2;</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="geography-item-link"><a href="#">связаться</a></div>
+                            </div>
+                            <div class="geography-item-map">
+                                <div class="geography-item-map-inner" id="map4"></div>
+                                <script>
+
+                                    ymaps.ready(init4);
+
+                                    var myMap4;
+
+                                    function init4() {
+                                        myMap4 = new ymaps.Map('map4', {
+                                            center: [55.864076, 37.649894],
+                                            zoom: 16,
+                                            controls: []
+                                        });
+
+                                        myMap4.behaviors.disable('scrollZoom');
+
+                                        var myPlacemark = new ymaps.Placemark([55.864076, 37.649894], {}, {
+                                            iconLayout: 'default#image',
+                                            iconImageHref: 'images/map-icon.png',
+                                            iconImageSize: [41, 41],
+                                            iconImageOffset: [-20, -20]
+                                        });
+                                        myMap4.geoObjects.add(myPlacemark);
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                        <!-- geography item END -->
+
+                        <!-- geography item -->
+                        <div class="geography-item">
+                            <div class="geography-item-content">
+                                <div class="geography-item-title"><a href="#">Г. РОСТОВ-НА-ДОНУ, ОМС №2</a></div>
+                                <div class="geography-item-cols">
+                                    <div class="geography-item-col">
+                                        <div class="geography-item-info">
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Телефон</div>
+                                                <div class="geography-item-info-value">+7 (495) 442-1250</div>
+                                            </div>
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Адрес</div>
+                                                <div class="geography-item-info-value">344016, г. Ростов-на-Дону, пер. Нефтяной, 4 “A”</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="geography-item-col">
+                                        <div class="geography-item-info">
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Общая полезной площадь</div>
+                                                <div class="geography-item-info-value">6 241 м&sup2;</div>
+                                            </div>
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Открытая площадка</div>
+                                                <div class="geography-item-info-value">1 950 м&sup2;</div>
+                                            </div>
+                                            <div class="geography-item-info-row">
+                                                <div class="geography-item-info-name">Офисные помещения</div>
+                                                <div class="geography-item-info-value">354 м&sup2;</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="geography-item-link"><a href="#">связаться</a></div>
+                            </div>
+                            <div class="geography-item-map">
+                                <div class="geography-item-map-inner" id="map5"></div>
+                                <script>
+
+                                    ymaps.ready(init5);
+
+                                    var myMap5;
+
+                                    function init5() {
+                                        myMap5 = new ymaps.Map('map5', {
+                                            center: [47.256962, 39.625711],
+                                            zoom: 16,
+                                            controls: []
+                                        });
+
+                                        myMap5.behaviors.disable('scrollZoom');
+
+                                        var myPlacemark = new ymaps.Placemark([47.256962, 39.625711], {}, {
+                                            iconLayout: 'default#image',
+                                            iconImageHref: 'images/map-icon.png',
+                                            iconImageSize: [41, 41],
+                                            iconImageOffset: [-20, -20]
+                                        });
+                                        myMap5.geoObjects.add(myPlacemark);
+                                    }
+                                </script>
+                            </div>
+                        </div>
+                        <!-- geography item END -->
+                    </div>
+                    <!-- geography list END -->
+
+                </div>
+                <!-- content END -->
+
+            </div>
+        </div>
+        <!-- wrapper END -->
+
+        <footer>
+            <div class="footer-inner">
+                <div class="footer-copyrights">
+                    <div class="footer-logo">
+                        <img src="images/footer-logo.png" alt="" width="53" height="49" />
+                        <div class="footer-logo-title">Ответственное хранение</div>
+                        <div class="footer-logo-subtitle">от Москвы до Владивостока</div>
+                    </div>
+                    <div class="footer-copyrights-text">© 2016 АО «1470 УМТО»</div>
+                    <div class="footer-politics"><a href="#">Политика конфиденциальности</a></div>
+                    <div class="footer-developer">Разработка сайта - <a href="#">Bilingo Digital Agency</a></div>
+                </div>
+
+                <ul class="footer-menu">
+                    <li><a href="#">О компании</a></li>
+                    <li><a href="#">География</a></li>
+                    <li><a href="#">Складские услуги</a></li>
+                    <li><a href="#">Филиалы</a></li>
+                    <li><a href="#">Контактная информация</a></li>
+                    <li><a href="#">Фотогалерея</a></li>
+                </ul>
+
+                <div class="footer-contacts">
+                    <div class="footer-contacts-header">
+                        <div class="footer-contacts-phone"><span>Контакты</span>+7 (495) 442-1250</div>
+                        <div class="footer-feedback">
+                            <a href="#" class="btn-1">обратная связь</a>
+                        </div>
+                    </div>
+                    <div class="footer-contacts-branches">
+                        <div class="footer-contacts-branches-item">
+                            <div class="footer-contacts-branches-name">ПБ «Очаково»</div>
+                            <div class="footer-contacts-branches-address">119530, г. Москва, Очаковское шоссе, д. 3 «А»</div>
+                        </div>
+                        <div class="footer-contacts-branches-item">
+                            <div class="footer-contacts-branches-name">МС «Самара»</div>
+                            <div class="footer-contacts-branches-address">443017, г. Самара, ул. Товарная, д.25</div>
+                        </div>
+                        <div class="footer-contacts-branches-item">
+                            <div class="footer-contacts-branches-name">ПБ «Очаково»</div>
+                            <div class="footer-contacts-branches-address">119530, г. Москва, Очаковское шоссе, д. 3 «А»</div>
+                        </div>
+                    </div>
+                    <div class="footer-contacts-branches-all"><a href="#">Все филиалы</a></div>
+                </div>
+            </div>
+        </footer>
+
+    </body>
+</html>

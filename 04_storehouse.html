@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <title>Ответственное хранение</title>
+
+        <link rel="stylesheet" href="css/styles.css" />
+        <link rel="stylesheet" href="js/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="js/slick/slick.css" />
+
+        <script src="js/jquery-2.2.4.min.js"></script>
+        <script src="js/jquery.maskedinput.min.js"></script>
+        <script src="js/validation/jquery.validate.min.js"></script>
+        <script src="js/validation/messages_ru.js"></script>
+        <script src="js/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="js/slick/slick.min.js"></script>
+        <script src="js/tools.js"></script>
+
+        <meta name="viewport" content="width=device-width" />
+    </head>
+
+    <body>
+
+        <!-- wrapper -->
+        <div class="wrapper">
+            <div class="wrapper-inner">
+
+                <nav>
+                    <ul>
+                        <li><a href="#">О компании<span></span></a></li>
+                        <li class="active"><a href="#">География</a></li>
+                        <li><a href="#">Складские услуги</a></li>
+                        <li><a href="#">Филиалы</a></li>
+                        <li><a href="#">Фотогалерея</a></li>
+                        <li><a href="#">Контакты</a></li>
+                    </ul>
+                </nav>
+
+                <header class="header-inverse">
+                    <div class="logo">
+                        <a href="#">
+                            <img src="images/logo.png" alt="" width="71" height="67" />
+                            <div class="logo-title">Ответственное хранение</div>
+                            <div class="logo-subtitle">от Москвы до Владивостока</div>
+                        </a>
+                    </div>
+
+                    <div class="header-address">г. Москва, ул.Искры, д. 33 «А» <strong>/</strong> <a href="#">Адреса</a></div>
+
+                    <div class="header-phone">+7 (800) 500-14-70</div>
+
+                </header>
+
+                <!-- bg -->
+                <div class="bg bg-slider">
+                    <div class="bg-slider-item" style="background-image:url(files/bg-slider-1.jpg)"></div>
+                    <div class="bg-slider-item" style="background-image:url(files/bg-slider-2.jpg)"></div>
+                    <div class="bg-slider-item" style="background-image:url(files/bg-slider-3.jpg)"></div>
+                    <div class="bg-slider-item" style="background-image:url(files/bg-slider-4.jpg)"></div>
+                    <img src="images/bg-border.png" alt="" class="bg-border" />
+                </div>
+                <!-- bg END -->
+
+                <!-- storehouse header -->
+                <div class="storehouse-header">
+                    <div class="breadcrumbs"><a href="#">Главная</a><span></span><a href="#">География</a><span></span>Складской комплекс г. Екатеринбург</div>
+                    <div class="storehouse-header-title">Складской комплекс <strong>г. Екатеринбург</strong></div>
+                    <ul class="bg-slider-preview">
+                        <li class="active"><a href="#"><img src="files/bg-preview-1.jpg" alt="" /></a></li>
+                        <li><a href="#"><img src="files/bg-preview-2.jpg" alt="" /></a></li>
+                        <li><a href="#"><img src="files/bg-preview-3.jpg" alt="" /></a></li>
+                        <li><a href="#"><img src="files/bg-preview-4.jpg" alt="" /></a></li>
+                    </ul>
+                </div>
+                <!-- storehouse header END -->
+
+                <!-- content -->
+                <div class="content">
+
+                    <h1>Окружной материальный склад №6</h1>
+
+                    <div class="cols">
+                        <div class="col-half">
+                            <h2>О проекте</h2>
+                            <p>Вы ищете склад ответственного хранения в г. Екатеринбурге? Предприятие сдает в г. Екатеринбурге площадку открытого хранения, а также закрытые неотапливаемые складские помещения, офисные помещения от собственника, без посредников и по доступной цене.</p>
+                        </div>
+                        <div class="col-half">
+                            <h2>Местоположение</h2>
+                            <p>Складской комплекс ОМС №6-филиал АО «1470 УМТО» в г. Екатеринбурге расположен рядом с ж/д станцией «Свердловская товарная» на улице Маневровой. Удобный подъезд для большегрузных автомобилей. Подача 20-т контейнеров и вагонов по ж/д путям. Кросс-докинг с ж/д вагонов, платформ, контейнеров на автомобили.</p>
+                        </div>
+                    </div>
+
+                    <!-- storehouse map -->
+                    <div class="storehouse-map">
+                        <div id="map"></div>
+                        <script src="http://api-maps.yandex.ru/2.1/?load=package.full&lang=ru-RU" type="text/javascript"></script>
+                        <script>
+
+                            ymaps.ready(init);
+
+                            var myMap;
+
+                            function init() {
+                                myMap = new ymaps.Map('map', {
+                                    center: [56.880332, 60.528304],
+                                    zoom: 17,
+                                    controls: []
+                                });
+
+                                myMap.behaviors.disable('scrollZoom');
+
+                                var myPlacemark = new ymaps.Placemark([56.880332, 60.528304], {}, {
+                                    iconLayout: 'default#image',
+                                    iconImageHref: 'images/map-icon-big.png',
+                                    iconImageSize: [70, 70],
+                                    iconImageOffset: [-35, -35]
+                                });
+                                myMap.geoObjects.add(myPlacemark);
+                            }
+                        </script>
+                    </div>
+                    <!-- storehouse map END -->
+
+                    <!-- storehouse info -->
+                    <div class="storehouse-info">
+                        <div class="storehouse-info-item">
+                            <div class="storehouse-info-item-title">Адрес</div>
+                            <div class="storehouse-info-item-text">620050, г. Екатеринбург,<br />ул. Маневровая 34 “A”</div>
+                        </div>
+                        <div class="storehouse-info-item">
+                            <div class="storehouse-info-item-title">По вопросам аренды</div>
+                            <div class="storehouse-info-item-text">
+                                <p>+7 (343) 322-99-25<br />+7 (982) 611-65-85</p>
+                                <p><a href="#">oms6@mail.ru</a></p>
+                            </div>
+                        </div>
+                        <div class="storehouse-info-item">
+                            <div class="storehouse-info-item-title">Презентация</div>
+                            <div class="storehouse-info-item-text">
+                                <a href="#" class="btn-2">посмотреть презентацию склада</a>
+                                <a href="#" class="btn-2">посмотреть видео склада</a>
+                            </div>
+                        </div>
+                        <div class="storehouse-info-item">
+                            <div class="storehouse-info-item-title">Координаты</div>
+                            <div class="storehouse-info-item-text">55.471987 N<br />37.745844 E</div>
+                        </div>
+                    </div>
+                    <!-- storehouse info END -->
+
+                    <!-- storehouse params -->
+                    <div class="storehouse-params">
+                        <div class="storehouse-params-inner">
+                            <h2>Технические характеристики</h2>
+                            <div class="cols">
+                                <div class="col-half">
+                                    <h4>Склады класса "А"</h4>
+                                    <ul>
+                                        <li>рабочая высота потолков – 12 м</li>
+                                        <li>шаг колонн – 12x24 м</li>
+                                        <li>нагрузка на пол – от 6 т/м2</li>
+                                        <li>глубина здания – от 80 до 120 м</li>
+                                        <li>уровень пола – 1,2 м</li>
+                                        <li>бетонный пол с антипылевым покрытием</li>
+                                        <li>пожарная сигнализация</li>
+                                        <li>спринклерная система пожаротушения</li>
+                                        <li>огороженная охраняемая территория</li>
+                                        <li>современная комплексная система безопасности;</li>
+                                        <li>встроенные блоки офисных помещений</li>
+                                        <li>8 неотапливаемых складских помещений</li>
+                                        <li>общая полезная площадь 4 277 кв. м</li>
+                                        <li>подкрановая и открытая площадки общей площадью 3 900 кв. м,</li>
+                                        <li>офисные помещения площадью 152 кв. м</li>
+                                        <li>ж/д ветка (тупик) с фронтом подачи вагонов/полувагонов = 2/4</li>
+                                        <li>Погрузочно-разгрузочные работы осуществляются козловым краном грузоподъемностью 12,5 т, а также автопогрузчиками грузоподъемностью от 1,5 до 3,5 т.</li>
+                                    </ul>
+                                    <h4>Территория</h4>
+                                    <ul>
+                                        <li>огороженная охраняемая территория</li>
+                                        <li>централизованная система безопасности,</li>
+                                        <li>система видеонаблюдения по периметру складского объекта</li>
+                                        <li>контроль доступа</li>
+                                        <li>удобный подъезд для большегрузных автомобилей</li>
+                                        <li>подача 20-т контейнеров и вагонов по ж/д путям</li>
+                                        <li>кросс-докинг с ж/д вагонов, платформ, контейнеров на автомобили.</li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-half">
+                                    <h4>План объекта</h4>
+                                    <p><img src="files/scheme.png" alt="" width="100%" /></p>
+
+                                    <form action="#" method="post">
+                                        <div class="form-label">Запрашиваемая площадь <span>*</span></div>
+                                        <div class="form-input"><input type="text" name="size" value="" class="required" /></div>
+                                        <div class="form-label">Телефон <span>*</span></div>
+                                        <div class="form-input"><input type="text" name="phone" value="" class="required maskPhone" /></div>
+                                        <div class="form-label">E-mail <span>*</span></div>
+                                        <div class="form-input"><input type="text" name="email" value="" class="required email" /></div>
+                                        <div class="form-submit"><input type="submit" value="Подать заявку на аренду" class="btn-1" /></div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- storehouse params END -->
+
+                    <!-- storehouse gallery -->
+                    <div class="storehouse-gallery">
+                        <div class="storehouse-gallery-item">
+                            <a href="files/storehouse-gallery-1.jpg" rel="gallery"><img src="files/storehouse-gallery-1.jpg" alt="" /></a>
+                        </div>
+                        <div class="storehouse-gallery-item">
+                            <a href="files/storehouse-gallery-2.jpg" rel="gallery"><img src="files/storehouse-gallery-2.jpg" alt="" /></a>
+                        </div>
+                        <div class="storehouse-gallery-item">
+                            <a href="files/storehouse-gallery-3.jpg" rel="gallery"><img src="files/storehouse-gallery-3.jpg" alt="" /></a>
+                        </div>
+                        <div class="storehouse-gallery-item">
+                            <a href="files/storehouse-gallery-4.jpg" rel="gallery"><img src="files/storehouse-gallery-4.jpg" alt="" /></a>
+                        </div>
+                    </div>
+                    <!-- storehouse gallery END -->
+
+                    <div class="storehouse-clients">
+                        <h2>Наши арендаторы</h2>
+                        <div class="about-partner-list">
+                            <div class="about-partner-item"><a href="#"><img src="files/client-1.png" alt="" /></a></div>
+                            <div class="about-partner-item"><a href="#"><img src="files/client-2.png" alt="" /></a></div>
+                            <div class="about-partner-item"><a href="#"><img src="files/client-3.png" alt="" /></a></div>
+                            <div class="about-partner-item"><a href="#"><img src="files/client-4.png" alt="" /></a></div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- content END -->
+
+            </div>
+        </div>
+        <!-- wrapper END -->
+
+        <footer>
+            <div class="footer-inner">
+                <div class="footer-copyrights">
+                    <div class="footer-logo">
+                        <img src="images/footer-logo.png" alt="" width="53" height="49" />
+                        <div class="footer-logo-title">Ответственное хранение</div>
+                        <div class="footer-logo-subtitle">от Москвы до Владивостока</div>
+                    </div>
+                    <div class="footer-copyrights-text">© 2016 АО «1470 УМТО»</div>
+                    <div class="footer-politics"><a href="#">Политика конфиденциальности</a></div>
+                    <div class="footer-developer">Разработка сайта - <a href="#">Bilingo Digital Agency</a></div>
+                </div>
+
+                <ul class="footer-menu">
+                    <li><a href="#">О компании</a></li>
+                    <li><a href="#">География</a></li>
+                    <li><a href="#">Складские услуги</a></li>
+                    <li><a href="#">Филиалы</a></li>
+                    <li><a href="#">Контактная информация</a></li>
+                    <li><a href="#">Фотогалерея</a></li>
+                </ul>
+
+                <div class="footer-contacts">
+                    <div class="footer-contacts-header">
+                        <div class="footer-contacts-phone"><span>Контакты</span>+7 (495) 442-1250</div>
+                        <div class="footer-feedback">
+                            <a href="#" class="btn-1">обратная связь</a>
+                        </div>
+                    </div>
+                    <div class="footer-contacts-branches">
+                        <div class="footer-contacts-branches-item">
+                            <div class="footer-contacts-branches-name">ПБ «Очаково»</div>
+                            <div class="footer-contacts-branches-address">119530, г. Москва, Очаковское шоссе, д. 3 «А»</div>
+                        </div>
+                        <div class="footer-contacts-branches-item">
+                            <div class="footer-contacts-branches-name">МС «Самара»</div>
+                            <div class="footer-contacts-branches-address">443017, г. Самара, ул. Товарная, д.25</div>
+                        </div>
+                        <div class="footer-contacts-branches-item">
+                            <div class="footer-contacts-branches-name">ПБ «Очаково»</div>
+                            <div class="footer-contacts-branches-address">119530, г. Москва, Очаковское шоссе, д. 3 «А»</div>
+                        </div>
+                    </div>
+                    <div class="footer-contacts-branches-all"><a href="#">Все филиалы</a></div>
+                </div>
+            </div>
+        </footer>
+
+    </body>
+</html>
