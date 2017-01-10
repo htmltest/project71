@@ -7,7 +7,7 @@
 }
 
 #fancybox-thumbs.bottom {
-	bottom: 2px;
+	bottom: 20px;
 }
 
 #fancybox-thumbs.top {
@@ -23,14 +23,19 @@
 
 #fancybox-thumbs ul li {
 	float: left;
-	padding: 1px;
+	padding: 3px;
 	opacity: 0.5;
+    margin: 0;
+}
+
+#fancybox-thumbs ul li:before {
+    display: none;
 }
 
 #fancybox-thumbs ul li.active {
-	opacity: 0.75;
-	padding: 0;
-	border: 1px solid #fff;
+	opacity: 1;
+	padding: 1px;
+	border: 2px solid #ffc613;
 }
 
 #fancybox-thumbs ul li:hover {
@@ -41,8 +46,6 @@
 	display: block;
 	position: relative;
 	overflow: hidden;
-	border: 1px solid #222;
-	background: #111;
 	outline: none;
 }
 

@@ -5,14 +5,18 @@
         <title>Ответственное хранение</title>
 
         <link rel="stylesheet" href="css/styles.css" />
+        <link rel="stylesheet" href="js/chosen/chosen.css" />
         <link rel="stylesheet" href="js/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="js/fancybox/helpers/jquery.fancybox-thumbs.css">
         <link rel="stylesheet" href="js/slick/slick.css" />
 
         <script src="js/jquery-2.2.4.min.js"></script>
+        <script src="js/chosen/chosen.jquery.min.js"></script>
         <script src="js/jquery.maskedinput.min.js"></script>
         <script src="js/validation/jquery.validate.min.js"></script>
         <script src="js/validation/messages_ru.js"></script>
         <script src="js/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="js/fancybox/helpers/jquery.fancybox-thumbs.js"></script>
         <script src="js/slick/slick.min.js"></script>
         <script src="js/tools.js"></script>
 
@@ -27,7 +31,15 @@
 
                 <nav>
                     <ul>
-                        <li><a href="#">О компании<span></span></a></li>
+                        <li class="with-submenu">
+                            <a href="#">О компании<span></span></a>
+                            <ul>
+                                <li><a href="#">Новости</a></li>
+                                <li><a href="#">Руководство</a></li>
+                                <li><a href="#">Реквизиты</a></li>
+                                <li><a href="#">Контакты</a></li>
+                            </ul>
+                        </li>
                         <li><a href="#">География</a></li>
                         <li><a href="#">Складские услуги</a></li>
                         <li><a href="#">Филиалы</a></li>
@@ -35,6 +47,29 @@
                         <li><a href="#">Контакты</a></li>
                     </ul>
                 </nav>
+
+                <div class="top-mobile">
+                    <a href="#" class="nav-mobile-link"></a>
+                    <div class="top-mobile-phone">+7 (800) 500-14-70</div>
+                    <div class="nav-mobile">
+                        <ul>
+                            <li class="with-submenu">
+                                <a href="#">О компании</a>
+                                <ul>
+                                    <li><a href="#">Новости</a></li>
+                                    <li><a href="#">Руководство</a></li>
+                                    <li><a href="#">Реквизиты</a></li>
+                                    <li><a href="#">Контакты</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">География</a></li>
+                            <li><a href="#">Складские услуги</a></li>
+                            <li><a href="#">Филиалы</a></li>
+                            <li><a href="#">Фотогалерея</a></li>
+                            <li><a href="#">Контакты</a></li>
+                        </ul>
+                    </div>
+                </div>
 
                 <header>
                     <div class="logo">
@@ -53,8 +88,8 @@
                     <div class="main-header">
                         <div class="main-header-content">
                             <h1>Ответственное хранение</h1>
-                            <div class="main-header-title">от Москвы<br />до Владивостока</div>
-                            <div class="main-header-text">10 складских комплексов класса «С» и «С+»,<br />расположенных в Москве, Московской области,<br />Екатеринбурге, Самаре, Хабаровске, Чите,<br />Ростове-на-Дону.</div>
+                            <div class="main-header-title">от Москвы<br /> до Владивостока</div>
+                            <div class="main-header-text">10 складских комплексов класса «С» и «С+»,<br /> расположенных в Москве, Московской области,<br /> Екатеринбурге, Самаре, Хабаровске, Чите,<br /> Ростове-на-Дону.</div>
                         </div>
 
                         <div class="main-header-form">
@@ -87,10 +122,30 @@
                                 <li><a href="#">Комплектация товара</a></li>
                                 <li><a href="#">Упаковка</a></li>
                             </ul>
+
+                            <div class="services-menu-mobile">
+                                <div class="services-menu-mobile-item">
+                                    <ul class="services-menu">
+                                        <li><a href="#">Кросс-докинг</a></li>
+                                        <li><a href="#">Экспедирование</a></li>
+                                        <li><a href="#">Ответственное хранение</a></li>
+                                        <li><a href="#">Транспортные услуги</a></li>
+                                    </ul>
+                                </div>
+                                <div class="services-menu-mobile-item">
+                                    <ul class="services-menu">
+                                        <li><a href="#">Погрузочно- разгрузочные работы</a></li>
+                                        <li><a href="#">Страхование груза</a></li>
+                                        <li><a href="#">Комплектация товара</a></li>
+                                        <li><a href="#">Упаковка</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                     <img src="images/bg-border-main.png" alt="" class="bg-border" />
+                    <img src="images/bg-border-main.png" alt="" class="bg-border-mobile" />
                 </div>
                 <!-- bg END -->
 
@@ -162,7 +217,7 @@
 
                         function init() {
                             myMap = new ymaps.Map('map', {
-                                center: [56.838607, 60.605514],
+                                center: [55.755814, 37.617635],
                                 zoom: 5,
                                 controls: []
                             });
@@ -358,6 +413,20 @@
                                 <div class="how-item-text">Складской процесс невозможен без применения подъемно- разгрузочного оборудования. Организация хранения товаров на складе предусматривает наличие механизмов и машин</div>
                             </div>
                         </div>
+                        <div class="main-header-form">
+                            <form action="#" method="post">
+                                <div class="form-input"><input type="text" name="name" value="" placeholder="Ваше имя" class="required" /></div>
+                                <div class="form-input"><input type="text" name="phone" value="" placeholder="Телефон " class="required maskPhone" /></div>
+                                <div class="form-input"><input type="text" name="email" value="" placeholder="Электронная почта" class="required email" /></div>
+                                <div class="form-input"><textarea name="message" rows="2" cols="10" placeholder="Опишите тип, объем груза и&nbsp;интересующий вас способ хранения" class="required"></textarea></div>
+                                <div class="main-header-form-text">Для получения полного расчета стоимости услуги хранения вам потребуется <a href="#">скачать анкету (.xls)</a>, заполнить ее и прикрепить к заявке.</div>
+                                <div class="form-file">
+                                    <div class="form-file-input">Прикрепить файл<input type="file" name="file" class="required" /></div>
+                                    <div class="form-file-name"></div>
+                                </div>
+                                <div class="form-submit"><input type="submit" value="Стать клиентом" class="btn-1" /></div>
+                            </form>
+                        </div>
                         <div class="how-form">
                             <form action="#" method="post">
                                 <div class="how-form-row">
@@ -421,7 +490,20 @@
                     <div class="footer-contacts-header">
                         <div class="footer-contacts-phone"><span>Контакты</span>+7 (495) 442-1250</div>
                         <div class="footer-feedback">
-                            <a href="#" class="btn-1">обратная связь</a>
+                            <a href="#" class="footer-feedback-link btn-1">обратная связь</a>
+                            <div class="footer-feedback-form">
+                                <form action="#" method="post">
+                                    <div class="footer-feedback-field">
+                                        <div class="form-label">Ваше имя</div>
+                                        <div class="form-input"><input type="text" name="name" value="" class="required" placeholder="Василий Петров" /></div>
+                                    </div>
+                                    <div class="footer-feedback-field">
+                                        <div class="form-label">Телефон</div>
+                                        <div class="form-input"><input type="text" name="phone" value="" class="required maskPhone" placeholder="+7 (___) ___-__-__" /></div>
+                                    </div>
+                                    <div class="form-submit"><input type="submit" value="ok" class="btn-1" /></div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                     <div class="footer-contacts-branches">

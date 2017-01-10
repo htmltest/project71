@@ -5,14 +5,18 @@
         <title>Ответственное хранение</title>
 
         <link rel="stylesheet" href="css/styles.css" />
+        <link rel="stylesheet" href="js/chosen/chosen.css" />
         <link rel="stylesheet" href="js/fancybox/jquery.fancybox.css">
+        <link rel="stylesheet" href="js/fancybox/helpers/jquery.fancybox-thumbs.css">
         <link rel="stylesheet" href="js/slick/slick.css" />
 
         <script src="js/jquery-2.2.4.min.js"></script>
+        <script src="js/chosen/chosen.jquery.min.js"></script>
         <script src="js/jquery.maskedinput.min.js"></script>
         <script src="js/validation/jquery.validate.min.js"></script>
         <script src="js/validation/messages_ru.js"></script>
         <script src="js/fancybox/jquery.fancybox.pack.js"></script>
+        <script src="js/fancybox/helpers/jquery.fancybox-thumbs.js"></script>
         <script src="js/slick/slick.min.js"></script>
         <script src="js/tools.js"></script>
 
@@ -27,7 +31,15 @@
 
                 <nav>
                     <ul>
-                        <li><a href="#">О компании<span></span></a></li>
+                        <li class="with-submenu">
+                            <a href="#">О компании<span></span></a>
+                            <ul>
+                                <li><a href="#">Новости</a></li>
+                                <li><a href="#">Руководство</a></li>
+                                <li><a href="#">Реквизиты</a></li>
+                                <li><a href="#">Контакты</a></li>
+                            </ul>
+                        </li>
                         <li><a href="#">География</a></li>
                         <li><a href="#">Складские услуги</a></li>
                         <li><a href="#">Филиалы</a></li>
@@ -35,6 +47,29 @@
                         <li><a href="#">Контакты</a></li>
                     </ul>
                 </nav>
+
+                <div class="top-mobile">
+                    <a href="#" class="nav-mobile-link"></a>
+                    <div class="top-mobile-phone">+7 (800) 500-14-70</div>
+                    <div class="nav-mobile">
+                        <ul>
+                            <li class="with-submenu">
+                                <a href="#">О компании</a>
+                                <ul>
+                                    <li><a href="#">Новости</a></li>
+                                    <li><a href="#">Руководство</a></li>
+                                    <li><a href="#">Реквизиты</a></li>
+                                    <li><a href="#">Контакты</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#">География</a></li>
+                            <li><a href="#">Складские услуги</a></li>
+                            <li><a href="#">Филиалы</a></li>
+                            <li class="active"><a href="#">Фотогалерея</a></li>
+                            <li><a href="#">Контакты</a></li>
+                        </ul>
+                    </div>
+                </div>
 
                 <header>
                     <div class="logo">
@@ -52,8 +87,9 @@
                 </header>
 
                 <!-- bg -->
-                <div class="bg" style="background-image:url(files/bg-gallery.jpg)">
+                <div class="bg bg-gallery" style="background-image:url(files/bg-gallery.jpg)">
                     <img src="images/bg-border.png" alt="" class="bg-border" />
+                    <img src="images/bg-border-mobile.png" alt="" class="bg-border-mobile" />
                 </div>
                 <!-- bg END -->
 
@@ -69,55 +105,55 @@
                     <!-- gallery -->
                     <div class="gallery">
                         <div class="gallery-item">
-                            <a href="files/gallery-01.jpg" rel="gallery">
+                            <a href="files/gallery-01.jpg" rel="gallery" title="Производственная база МТС «Очаково»" data-date="12 марта 2016 года">
                                 <div class="gallery-item-photo"><img src="files/gallery-01.jpg" alt="" /></div>
                                 <div class="gallery-item-title">Производственная база МТС «Очаково»</div>
                             </a>
                         </div>
                         <div class="gallery-item">
-                            <a href="files/gallery-02.jpg" rel="gallery">
+                            <a href="files/gallery-02.jpg" rel="gallery" title="86 МЕХАНИЧЕСКИЙ ЗАВОД" data-date="13 марта 2016 года">
                                 <div class="gallery-item-photo"><img src="files/gallery-02.jpg" alt="" /></div>
                                 <div class="gallery-item-title">86 МЕХАНИЧЕСКИЙ ЗАВОД</div>
                             </a>
                         </div>
                         <div class="gallery-item">
-                            <a href="files/gallery-03.jpg" rel="gallery">
+                            <a href="files/gallery-03.jpg" rel="gallery" title="МАТЕРИАЛЬНЫЙ СКЛАД «СВИБЛОВО»" data-date="14 марта 2016 года">
                                 <div class="gallery-item-photo"><img src="files/gallery-03.jpg" alt="" /></div>
                                 <div class="gallery-item-title">МАТЕРИАЛЬНЫЙ СКЛАД «СВИБЛОВО»</div>
                             </a>
                         </div>
                         <div class="gallery-item">
-                            <a href="files/gallery-04.jpg" rel="gallery">
+                            <a href="files/gallery-04.jpg" rel="gallery" title="3711 ЛЕСОЗАГОТОВИТЕЛЬНЫЙ УЧАСТОК" data-date="15 марта 2016 года">
                                 <div class="gallery-item-photo"><img src="files/gallery-04.jpg" alt="" /></div>
                                 <div class="gallery-item-title">3711 ЛЕСОЗАГОТОВИТЕЛЬНЫЙ УЧАСТОК</div>
                             </a>
                         </div>
                         <div class="gallery-item">
-                            <a href="files/gallery-05.jpg" rel="gallery">
+                            <a href="files/gallery-05.jpg" rel="gallery" title="ЗАВОД СБОРНЫХ КОНСТРУКЦИЙ И&nbsp;СТРОИТЕЛЬНЫХ ДЕТАЛЕЙ" data-date="16 марта 2016 года">
                                 <div class="gallery-item-photo"><img src="files/gallery-05.jpg" alt="" /></div>
                                 <div class="gallery-item-title">ЗАВОД СБОРНЫХ КОНСТРУКЦИЙ И&nbsp;СТРОИТЕЛЬНЫХ ДЕТАЛЕЙ</div>
                             </a>
                         </div>
                         <div class="gallery-item">
-                            <a href="files/gallery-06.jpg" rel="gallery">
+                            <a href="files/gallery-06.jpg" rel="gallery" title="МАТЕРИАЛЬНЫЙ СКЛАД «СВИБЛОВО»" data-date="17 марта 2016 года">
                                 <div class="gallery-item-photo"><img src="files/gallery-06.jpg" alt="" /></div>
                                 <div class="gallery-item-title">МАТЕРИАЛЬНЫЙ СКЛАД «СВИБЛОВО»</div>
                             </a>
                         </div>
                         <div class="gallery-item">
-                            <a href="files/gallery-07.jpg" rel="gallery">
+                            <a href="files/gallery-07.jpg" rel="gallery" title="ПРОИЗВОДСТВО №4" data-date="18 марта 2016 года">
                                 <div class="gallery-item-photo"><img src="files/gallery-07.jpg" alt="" /></div>
                                 <div class="gallery-item-title">ПРОИЗВОДСТВО №4</div>
                             </a>
                         </div>
                         <div class="gallery-item">
-                            <a href="files/gallery-08.jpg" rel="gallery">
+                            <a href="files/gallery-08.jpg" rel="gallery" title="34 ПРОМЫШЛЕННЫЙ КОМБИНАТ" data-date="19 марта 2016 года">
                                 <div class="gallery-item-photo"><img src="files/gallery-08.jpg" alt="" /></div>
                                 <div class="gallery-item-title">34 ПРОМЫШЛЕННЫЙ КОМБИНАТ</div>
                             </a>
                         </div>
                         <div class="gallery-item">
-                            <a href="files/gallery-09.jpg" rel="gallery">
+                            <a href="files/gallery-09.jpg" rel="gallery" title="ПБ 27 ДОЗ «ГЖАТСКАЯ»" data-date="20 марта 2016 года">
                                 <div class="gallery-item-photo"><img src="files/gallery-09.jpg" alt="" /></div>
                                 <div class="gallery-item-title">ПБ 27 ДОЗ «ГЖАТСКАЯ»</div>
                             </a>
@@ -167,7 +203,20 @@
                     <div class="footer-contacts-header">
                         <div class="footer-contacts-phone"><span>Контакты</span>+7 (495) 442-1250</div>
                         <div class="footer-feedback">
-                            <a href="#" class="btn-1">обратная связь</a>
+                            <a href="#" class="footer-feedback-link btn-1">обратная связь</a>
+                            <div class="footer-feedback-form">
+                                <form action="#" method="post">
+                                    <div class="footer-feedback-field">
+                                        <div class="form-label">Ваше имя</div>
+                                        <div class="form-input"><input type="text" name="name" value="" class="required" placeholder="Василий Петров" /></div>
+                                    </div>
+                                    <div class="footer-feedback-field">
+                                        <div class="form-label">Телефон</div>
+                                        <div class="form-input"><input type="text" name="phone" value="" class="required maskPhone" placeholder="+7 (___) ___-__-__" /></div>
+                                    </div>
+                                    <div class="form-submit"><input type="submit" value="ok" class="btn-1" /></div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                     <div class="footer-contacts-branches">
