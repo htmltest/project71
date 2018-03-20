@@ -16,6 +16,12 @@ $(document).ready(function() {
         e.preventDefault();
     });
 
+    $('.gallery-item a, .storehouse-gallery-item a').click(function(e) {
+        $('html').data('scrollTop', $(window).scrollTop());
+        $('.wrapper').css('margin-top', -$(window).scrollTop());
+        e.preventDefault();
+    });
+
     $('.gallery-item a, .storehouse-gallery-item a').fancybox({
         prevEffect: 'none',
         nextEffect: 'none',
@@ -36,8 +42,9 @@ $(document).ready(function() {
 				height	: 58
 			}
         },
-        beforeShow: function() { this.title += '<div class="fancybox-title-date">' + $(this.element).data('date') + '</div><a href="' + $(this.element).attr('href') + '" download class="fancybox-download-link"></a>'}
-
+        closeEffect: 'none',
+        closeSpeed: 0,
+        beforeShow: function() { this.title += '<div class="fancybox-title-date">' + $(this.element).data('date') + '</div><a href="' + $(this.element).attr('href') + '" download class="fancybox-download-link"></a>' }
     });
 
     $('.storehouse-info-item-text a').fancybox({
@@ -53,6 +60,8 @@ $(document).ready(function() {
             next     : '<a title="Следующая" class="fancybox-nav fancybox-next" href="javascript:;"><span></span></a>',
             prev     : '<a title="Предыдущая" class="fancybox-nav fancybox-prev" href="javascript:;"><span></span></a>'
         },
+        closeEffect: 'none',
+        closeSpeed: 0,
         beforeShow: function() { this.title += '<div class="fancybox-title-date">' + $(this.element).data('date') + '</div>'}
     });
 
@@ -179,14 +188,6 @@ $(document).ready(function() {
         e.preventDefault();
     });
 
-    $('.news-other-list').slick({
-        infinite: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        prevArrow: '<button type="button" class="slick-prev"></button>',
-        nextArrow: '<button type="button" class="slick-next"></button>'
-    });
-
     $('.geography-item-feedback-link').click(function(e) {
         var curBlock = $(this).parent();
         if (curBlock.hasClass('open')) {
@@ -233,6 +234,34 @@ $(document).ready(function() {
         adaptiveHeight: true,
         arrows: false,
         dots: true
+    });
+
+    $('.header-address-window-link').click(function(e) {
+        $(this).parent().toggleClass('open');
+        e.preventDefault();
+    });
+
+    $(document).click(function(e) {
+        if ($(e.target).parents().filter('.header-address').length == 0) {
+            $('.header-address').removeClass('open');
+        }
+    });
+
+    $('body').on('click', '.why-tab-more-link', function(e) {
+        $(this).parents().filter('.why-tab-text').toggleClass('open');
+        e.preventDefault();
+    });
+
+    $(window).on('load resize', function() {
+        $('.why-tab-text').each(function() {
+            var curBlock = $(this);
+            curBlock.removeClass('open');
+            if (curBlock.find('.why-tab-text-wrap').outerHeight() < curBlock.find('.why-tab-text-inner').outerHeight()) {
+                curBlock.addClass('why-tab-text-with-link');
+            } else {
+                curBlock.removeCass('why-tab-text-with-link');
+            }
+        });
     });
 
 });

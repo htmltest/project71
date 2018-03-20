@@ -60,15 +60,15 @@ li ol li:nth-child(23):before {content:"w."}
 li ol li:nth-child(24):before {content:"x."}
 li ol li:nth-child(25):before {content:"y."}
 li ol li:nth-child(26):before {content:"z."}
-table {font-size:16px; line-height:20px; border-collapse:collapse; width:100%; margin:40px 0}
-table th {vertical-align:top; padding:18px 0 21px 30px; border-bottom:2px solid #ffc613; font-size:12px; font-weight:bold; text-align:left; text-transform:uppercase; color:#000}
-table th:first-child {padding-left:0}
-table td {vertical-align:top; padding:18px 0 21px 30px; border-top:1px solid #e6e6e6}
-table td:first-child {padding-left:0}
-table tbody tr:first-child td {border-top:none}
-table thead+tbody {border-bottom:2px solid #ffc613}
-table p {margin:10px 0 0 0}
-table p:first-child {margin:0}
+.wrapper table {font-size:16px; line-height:20px; border-collapse:collapse; width:100%; margin:40px 0}
+.wrapper table th {vertical-align:top; padding:18px 0 21px 30px; border-bottom:2px solid #ffc613; font-size:12px; font-weight:bold; text-align:left; text-transform:uppercase; color:#000}
+.wrapper table th:first-child {padding-left:0}
+.wrapper table td {vertical-align:top; padding:18px 0 21px 30px; border-top:1px solid #e6e6e6}
+.wrapper table td:first-child {padding-left:0}
+.wrapper table tbody tr:first-child td {border-top:none}
+.wrapper table thead+tbody {border-bottom:2px solid #ffc613}
+.wrapper table p {margin:10px 0 0 0}
+.wrapper table p:first-child {margin:0}
 
 @media (max-width:1199px) {
     h1 {font-size:45px; line-height:50px}
@@ -81,7 +81,7 @@ table p:first-child {margin:0}
     ul li:before {top:9px}
     ol {margin:25px 0}
     ol li {margin:25px 0}
-    table {margin:50px 0}
+    .wrapper table {margin:50px 0}
 
     .mobile-wide {margin-left:-55px; margin-right:-55px}
 }
@@ -253,7 +253,7 @@ nav > ul > li > ul > li > a:hover {color:#fff; text-decoration:none; background:
     .nav-mobile {display:none}
     .nav-mobile-open body {overflow:hidden}
     .nav-mobile-open .nav-mobile {display:block; position:fixed; left:0; top:50px; right:0; bottom:0; background:rgba(0, 0, 0, .8); z-index:8000; overflow:auto}
-    .nav-mobile > ul {margin:0; position:absolute; left:0; top:0; right:50%; bottom:0; padding:25px 0; background:#ffc613; overflow:auto}
+    .nav-mobile > ul {margin:0; position:absolute; left:0; top:0; right:40%; bottom:0; padding:25px 0; background:#ffc613; overflow:auto}
     .nav-mobile > ul > li {margin:0; padding:0; border-top:1px solid #f2bc14}
     .nav-mobile > ul > li:first-child {border-top:none}
     .nav-mobile > ul > li:before {display:none}
@@ -285,7 +285,7 @@ nav > ul > li > ul > li > a:hover {color:#fff; text-decoration:none; background:
     .bg-news-item {height:824px}
 }
 
-header {position:relative; max-width:1170px; padding:0 15px 0 15px; margin:0 auto; height:86px; z-index:9; overflow:hidden}
+header {position:relative; max-width:1170px; padding:0 15px 0 15px; margin:0 auto; height:86px; z-index:7000}
 header:after {content:"."; display:block; clear:both; visibility:hidden; height:0}
 
 @media (max-width:1199px) {
@@ -306,17 +306,36 @@ header:after {content:"."; display:block; clear:both; visibility:hidden; height:
     .header-storehouse .logo-subtitle {color:#fff}
 }
 
-.header-address {float:right; color:#fff; font-size:15px; line-height:20px; margin:48px 20px 0 0; padding:0 0 0 21px; background:url(../images/header-address.png) no-repeat left center}
+.header-address {float:right; color:#fff; font-size:15px; line-height:20px; margin:48px 20px 0 0; padding:0 0 0 21px; background:url(../images/header-address.png) no-repeat left center; position:relative}
 .header-inverse .header-address {color:#000; background-image:url(../images/header-address-inverse.png)}
 .header-address strong {color:#bce0e5; margin:0 3px 0 15px}
 .header-inverse .header-address strong {color:#ffc613}
-.header-address a {color:#bce0e5; font-size:12px; text-transform:uppercase; font-family:DINProMedium, sans-serif; text-decoration:underline}
-.header-address a:hover {color:#fff}
-.header-inverse .header-address a {color:#ffc613}
-.header-inverse .header-address a:hover {color:#ffe613}
+.header-address-window-link {color:#bce0e5; font-size:12px; text-transform:uppercase; font-family:DINProMedium, sans-serif; text-decoration:underline}
+.header-address-window-link:hover {color:#fff}
+.header-inverse .header-address .header-address-window-link {color:#ffc613}
+.header-inverse .header-address .header-address-window-link:hover {color:#ffe613}
+
+.header-address-window {display:none; position:absolute; right:-20px; top:100%; width:370px; padding:5px 0 0 0}
+.header-address.open .header-address-window {display:block}
+.header-address-window::before {content:""; display:block; height:26px; background:url(../images/header-address-window-top.png)}
+.header-address-window::after {content:""; display:block; width:0; height:0; border-top:16px solid #f7f7f7; border-right:370px solid transparent}
+.header-address-window-content {background:#f7f7f7; padding:12px 0 0 0}
+.header-address-item {border-top:1px solid #e6e6e6; padding:18px 30px 21px 30px}
+.header-address-item:first-child {border-top:none}
+.header-address-item-title {font-size:16px; line-height:20px; color:#000; font-weight:bold; text-transform:uppercase}
+.header-address-item-title a {color:#000; text-decoration:none; border-bottom:1px solid #ffc513}
+.header-address-item-title a:hover {color:#000; border-bottom:none}
+.header-address-item-address {font-size:14px; line-height:20px; color:#000}
+.header-address-all {font-size:16px; line-height:20px; color:#000; font-weight:bold; text-transform:uppercase; padding:21px 30px 19px 30px}
+.header-address-all a {color:#000; text-decoration:none; border-bottom:1px solid #ffc513}
+.header-address-all a:hover {color:#000; border-bottom:none}
 
 .header-phone {float:right; color:#fff; font-size:20px; font-weight:bold; padding:0 0 0 25px; margin:49px 58px 0 0; background:url(../images/header-phone.png) no-repeat left center}
 .header-inverse .header-phone {color:#000; background-image:url(../images/header-phone-inverse.png)}
+
+@media (max-width:1199px) {
+    .header-phone {display:none}
+}
 
 .content {max-width:970px; padding:60px 115px 0 115px; margin:0 auto; position:relative; background:#fff; border-top:10px solid #ffc613; z-index:10}
 
@@ -587,21 +606,20 @@ header:after {content:"."; display:block; clear:both; visibility:hidden; height:
 .news-other:before {content:""; display:block; width:9999px; height:100%; position:absolute; left:100%; top:0; background:#ffc613}
 .news-other:after {content:""; display:block; width:9999px; height:100%; position:absolute; right:100%; top:0; background:#ffc613}
 .news-other-list {font-size:0; line-height:0; letter-spacing:-1px; white-space:nowrap}
-.news-other-item {display:inline-block; vertical-align:top; width:50%; white-space:normal; letter-spacing:0; position:relative}
+.news-other-item {display:inline-block; vertical-align:top; width:50%; white-space:normal; letter-spacing:0; position:relative; text-decoration:none; color:#000}
+.news-other-item:before {content:""; display:block; z-index:2; width:12px; height:21px; position:absolute; right:-40px; top:50%; margin:-11px 0 0 0; background:url(../images/news-other-arrows.png) -12px top; border:none; padding:0; outline:none; border-radius:0; -webkit-appearance:none; cursor:pointer}
+.news-other-item:nth-child(odd):before {left:-40px; right:auto; background-position:left top}
+.news-other-item:hover {text-decoration:none}
 .news-other-item:after {content:""; display:block; width:1px; height:100%; position:absolute; left:0; top:0; background:#e5b211}
 .news-other-item:nth-child(odd) {text-align:right}
 .news-other-item:nth-child(odd):after {left:auto; right:-1px}
-.news-other-item-title {font-weight:bold; font-size:15px; line-height:20px; text-transform:uppercase; color:#000; padding:6px 0 0 66px}
-.news-other-item-title a {color:#000; text-decoration:none}
-.news-other-item-anonce {font-size:12px; line-height:15px; color:#000; padding:8px 0 0 66px}
-.news-other-item-date {font-size:12px; line-height:15px; color:#000; padding:15px 0 11px 66px}
+.news-other-item-title {font-weight:bold; font-size:15px; line-height:20px; text-transform:uppercase; padding:6px 0 0 66px}
+.news-other-item:hover .news-other-item-title {text-decoration:underline}
+.news-other-item-anonce {font-size:12px; line-height:15px; padding:8px 0 0 66px}
+.news-other-item-date {font-size:12px; line-height:15px; padding:15px 0 11px 66px}
 .news-other-item:nth-child(odd) .news-other-item-title,
 .news-other-item:nth-child(odd) .news-other-item-anonce,
 .news-other-item:nth-child(odd) .news-other-item-date {padding-left:0; padding-right:66px}
-.news-other .slick-prev,
-.news-other .slick-next {display:block; z-index:2; width:12px; height:21px; position:absolute; top:50%; margin:-11px 0 0 0; background:url(../images/news-other-arrows.png); border:none; padding:0; outline:none; border-radius:0; -webkit-appearance:none; cursor:pointer}
-.news-other .slick-prev {left:-40px}
-.news-other .slick-next {right:-40px; background-position:-12px top}
 
 @media (max-width:1199px) {
     .news-other {margin-bottom:-100px; margin-left:0; margin-right:0}
@@ -751,7 +769,7 @@ header:after {content:"."; display:block; clear:both; visibility:hidden; height:
 .map-geography-menu > ul > li:hover > div {background:#f5f5f5; position:relative; z-index:2}
 .map-geography-menu > ul > li > div > span {display:inline-block; vertical-align:middle; width:9px; height:6px; background:url(../images/map-geography-menu.png); margin:-2px 0 0 12px}
 .map-geography-menu > ul > li:hover > div > span {background-position:left -6px}
-.map-geography-menu > ul > li > ul {display:none; position:absolute; left:0; top:100%; min-width:100%; z-index:99; background:#f5f5f5; text-align:left; margin:0; padding:13px 0 9px 0}
+.map-geography-menu > ul > li > ul {display:none; position:absolute; right:0; top:100%; min-width:100%; white-space:nowrap; z-index:99; background:#f5f5f5; text-align:left; margin:0; padding:13px 0 9px 0}
 .map-geography-menu > ul > li:hover > ul {display:block}
 .map-geography-menu > ul > li > ul > li {margin:0; padding:0; border-top:1px solid #e6e6e6}
 .map-geography-menu > ul > li > ul > li:before {display:none}
@@ -934,7 +952,11 @@ header:after {content:"."; display:block; clear:both; visibility:hidden; height:
     .storehouse-clients .about-partner-list {margin:-50px -30px 0 -30px}
 }
 
-.bg-main {height:auto; position:relative; margin:-136px 0 0 0; padding:136px 0 0 0; top:auto}
+.bg-main {height:auto; position:relative; margin:-136px 0 0 0; padding:136px 0 0 0; top:auto; background-position:center top; background-size:100% auto}
+
+@media (max-width:1199px) {
+    .bg-main {background-size:auto 2000px}
+}
 
 .main-header {max-width:1170px; margin:0 auto; position:relative; padding:40px 15px 0 15px}
 .main-header:after {content:"."; display:block; clear:both; visibility:hidden; height:0}
@@ -1019,15 +1041,23 @@ header:after {content:"."; display:block; clear:both; visibility:hidden; height:
     .why-menu li.active a:after {height:7px; top:0; background:#000}
 }
 
-.why-tab {display:none; background:#f7f7f7; padding:0 50px 70px 50px; color:#000}
+.why-tabs {position:relative; background:#f7f7f7; padding:0 50px 70px 50px; color:#000}
+.why-tab {position:absolute; left:-9999px; top:-9999px; width:100%}
 .why-tab:after {content:"."; display:block; clear:both; visibility:hidden; height:0}
-.why-tab.active {display:block}
+.why-tab.active {position:relative; left:auto; top:auto}
 .why-tab-title {float:left; width:250px; font-weight:bold; text-transform:uppercase; font-size:25px; line-height:25px; margin:55px 0 0 0}
 .why-tab-text {margin:0 0 0 290px; font-size:15px; padding:57px 0 0 0}
+.why-tab-text-wrap {max-height:180px; position:relative; overflow:hidden}
+.why-tab-text.open .why-tab-text-wrap {max-height:none; overflow:auto}
 .why-tab-text p {margin:0 0 20px 0}
-.why-tab-text .btn-2 {width:170px; height:40px; border-radius:3px; border-color:#ccc; font-size:12px; line-height:38px; font-weight:normal; margin:33px 0 0 0}
+.why-tab-text p:last-child {margin:0}
+.why-tab-text .btn-2 {display:none; width:170px; height:40px; border-radius:3px; border-color:#ccc; font-size:12px; line-height:38px; font-weight:normal; margin:33px 0 0 0}
+.why-tab-text.why-tab-text-with-link .btn-2 {display:block}
 .why-tab-text .btn-2:hover {text-decoration:none; border-color:#c3c4c4}
 .why-tab-text .btn-2:active {text-decoration:none; border-color:#000}
+.why-tab-more-text-2 {display:none}
+.why-tab-text.open .why-tab-more-text-1 {display:none}
+.why-tab-text.open .why-tab-more-text-2 {display:inline}
 
 @media (max-width:1199px) {
     .why-tab {margin:50px 0 0 0; padding:0 30px 130px 30px}
