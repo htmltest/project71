@@ -259,7 +259,7 @@ $(document).ready(function() {
             if (curBlock.find('.why-tab-text-wrap').outerHeight() < curBlock.find('.why-tab-text-inner').outerHeight()) {
                 curBlock.addClass('why-tab-text-with-link');
             } else {
-                curBlock.removeCass('why-tab-text-with-link');
+                curBlock.removeClass('why-tab-text-with-link');
             }
         });
     });

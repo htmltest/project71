@@ -1033,7 +1033,7 @@ header:after {content:"."; display:block; clear:both; visibility:hidden; height:
 
 @media (max-width:1199px) {
     .why {position:relative; padding-left:25px; padding-right:25px; padding-bottom:75px}
-    .why-menu {display:block; position:absolute; left:54px; right:54px; margin:0; bottom:135px; width:auto; font-size:0; line-height:0; letter-spacing:-1px}
+    .why-menu {display:block; position:absolute; left:54px; right:54px; margin:0; bottom:135px; width:auto; font-size:0; line-height:0; letter-spacing:-1px; z-index:1}
     .why-menu li {display:block; width:20%; float:left; padding:0 1px; box-sizing:border-box}
     .why-menu li a {display:block; height:7px; position:relative}
     .why-menu li a:after {content:""; display:block; width:100%; height:3px; background:#cdcccc; position:relative; top:2px}
@@ -1060,10 +1060,10 @@ header:after {content:"."; display:block; clear:both; visibility:hidden; height:
 .why-tab-text.open .why-tab-more-text-2 {display:inline}
 
 @media (max-width:1199px) {
-    .why-tab {margin:50px 0 0 0; padding:0 30px 130px 30px}
+    .why-tabs {margin:50px 0 0 0; padding:0 30px 130px 30px}
     .why-tab-title  {font-size:20px; float:none; width:auto; margin:0; padding:47px 0 0 0}
     .why-tab-text {margin:0; font-size:16px; padding:25px 0 0 0}
-    .why-tab-text .btn-2 {border:none; color:#000; color:#000; font-weight:bold; width:auto; display:inline-block}
+    .why-tab-text .btn-2 {border:none; color:#000; color:#000; font-weight:bold; width:auto; display:inline-block; text-align:left}
 }
 
 .how {background:#f2f4f5 url(../images/how.jpg) no-repeat center; background-size:cover; padding:93px 0 110px 0}
