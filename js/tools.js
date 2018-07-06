@@ -16,53 +16,77 @@ $(document).ready(function() {
         e.preventDefault();
     });
 
-    $('.gallery-item a, .storehouse-gallery-item a').click(function(e) {
-        $('html').data('scrollTop', $(window).scrollTop());
-        $('.wrapper').css('margin-top', -$(window).scrollTop());
-        e.preventDefault();
-    });
-
     $('.gallery-item a, .storehouse-gallery-item a').fancybox({
-        prevEffect: 'none',
-        nextEffect: 'none',
-        margin: 0,
-        padding: 0,
-        maxWidth: 970,
-        minWidth: 480,
-        topRatio: 0,
-        aspectRatio: true,
-        tpl : {
-            closeBtn : '<a title="Закрыть" class="fancybox-item fancybox-close" href="javascript:;"></a>',
-            next     : '<a title="Следующая" class="fancybox-nav fancybox-next" href="javascript:;"><span></span></a>',
-            prev     : '<a title="Предыдущая" class="fancybox-nav fancybox-prev" href="javascript:;"><span></span></a>'
+        buttons : [
+            'download',
+            'close'
+        ],
+        lang : 'ru',
+        i18n : {
+            'ru' : {
+                DOWNLOAD    : 'Скачать',
+                CLOSE       : 'Закрыть',
+                NEXT        : 'Вперед',
+                PREV        : 'Назад'
+            }
         },
-        helpers: {
-			thumbs	: {
-				width	: 86,
-				height	: 58
-			}
+        baseTpl:
+            '<div class="fancybox-container" role="dialog" tabindex="-1">' +
+                '<div class="fancybox-bg"></div>' +
+                '<div class="fancybox-toolbar">{{buttons}}</div>' +
+                '<div class="fancybox-navigation">{{arrows}}</div>' +
+                '<div class="fancybox-inner">' +
+                    '<div class="fancybox-caption"></div>' +
+                    '<div class="fancybox-stage"></div>' +
+                "</div>" +
+            "</div>",
+        btnTpl: {
+            download:
+                '<a download data-fancybox-download class="fancybox-button fancybox-button--download" title="{{DOWNLOAD}}" href="javascript:;"></a>',
+            close:
+                '<button data-fancybox-close class="fancybox-button fancybox-button--close" title="{{CLOSE}}"></button>',
+            arrowLeft:
+                '<a data-fancybox-prev class="fancybox-button fancybox-button--arrow_left" title="{{PREV}}" href="javascript:;"></a>',
+            arrowRight:
+                '<a data-fancybox-next class="fancybox-button fancybox-button--arrow_right" title="{{NEXT}}" href="javascript:;"></a>'
         },
-        closeEffect: 'none',
-        closeSpeed: 0,
-        beforeShow: function() { this.title += '<div class="fancybox-title-date">' + $(this.element).data('date') + '</div><a href="' + $(this.element).attr('href') + '" download class="fancybox-download-link"></a>' }
+        thumbs: {
+            autoStart: true,
+            hideOnClose: true,
+            axis: 'x'
+        }
     });
 
     $('.storehouse-info-item-text a').fancybox({
-        margin: 0,
-        padding: 0,
-        maxWidth: 970,
-        minWidth: 480,
-        topRatio: 0,
-        aspectRatio: true,
-        scrolling: 'visible',
-        tpl : {
-            closeBtn : '<a title="Закрыть" class="fancybox-item fancybox-close" href="javascript:;"></a>',
-            next     : '<a title="Следующая" class="fancybox-nav fancybox-next" href="javascript:;"><span></span></a>',
-            prev     : '<a title="Предыдущая" class="fancybox-nav fancybox-prev" href="javascript:;"><span></span></a>'
+        buttons : [
+            'close'
+        ],
+        lang : 'ru',
+        i18n : {
+            'ru' : {
+                CLOSE       : 'Закрыть',
+                NEXT        : 'Вперед',
+                PREV        : 'Назад'
+            }
         },
-        closeEffect: 'none',
-        closeSpeed: 0,
-        beforeShow: function() { this.title += '<div class="fancybox-title-date">' + $(this.element).data('date') + '</div>'}
+        baseTpl:
+            '<div class="fancybox-container" role="dialog" tabindex="-1">' +
+                '<div class="fancybox-bg"></div>' +
+                '<div class="fancybox-toolbar">{{buttons}}</div>' +
+                '<div class="fancybox-navigation">{{arrows}}</div>' +
+                '<div class="fancybox-inner">' +
+                    '<div class="fancybox-caption"></div>' +
+                    '<div class="fancybox-stage"></div>' +
+                "</div>" +
+            "</div>",
+        btnTpl: {
+            close:
+                '<button data-fancybox-close class="fancybox-button fancybox-button--close" title="{{CLOSE}}"></button>',
+            arrowLeft:
+                '<a data-fancybox-prev class="fancybox-button fancybox-button--arrow_left" title="{{PREV}}" href="javascript:;"></a>',
+            arrowRight:
+                '<a data-fancybox-next class="fancybox-button fancybox-button--arrow_right" title="{{NEXT}}" href="javascript:;"></a>'
+        }
     });
 
     $('.news-slider').each(function() {
