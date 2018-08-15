@@ -139,133 +139,191 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="map-geography-content" id="map-big"></div>
-                    <script src="http://api-maps.yandex.ru/2.1/?load=package.full&lang=ru-RU" type="text/javascript"></script>
-                    <script>
+                    <div class="map-geography-content-wrap">
+                        <div class="map-geography-content" id="map-big"></div>
+                        <script src="https://api-maps.yandex.ru/2.1/?load=package.full&lang=ru-RU" type="text/javascript"></script>
+                        <script>
 
-                        var offices = [
-                                        [55.69489,  37.461921,  'windows/popup.html', 'ПБ «Очаково»'],
-                                        [56.025824, 37.430696,  'windows/popup.html', 'МС «Лобня»'],
-                                        [53.240258, 50.298218,  'windows/popup.html', 'МО, Ж/Д СТ. СЕЛЯТИНО, МС «ТАМАНЬ»'],
-                                        [55.864076, 37.649894,  'windows/popup.html', 'МС «СВИБЛОВО»'],
-                                        [47.256962, 39.625711,  'windows/popup.html', 'Г. РОСТОВ-НА-ДОНУ, ОМС №2']
-                                      ];
+                            var offices = [
+                                            [55.694696657715,   37.463176773819,    'windows/popup.html', 'Центральный офис'],
+                                            [55.864076,         37.649894,          'windows/popup.html', 'СК «Свиблово»'],
+                                            [56.025824,         37.430696,          'windows/popup.html', 'СК «Лобня»'],
+                                            [55.525747225091,   36.971348253967,    'windows/popup.html', 'СК «Тамань»'],
+                                            [56.878315,         60.534943,          'windows/popup.html', 'СК «Екатеринбург»'],
+                                            [53.240258,         50.298218,          'windows/popup.html', 'СК «Самара»'],
+                                            [47.256962,         39.625711,          'windows/popup.html', 'СК «Ростов-на-Дону»'],
+                                            [52.057680482181,   113.45510514285,    'windows/popup.html', 'СК «Чита»'],
+                                            [48.379512,         135.080738,         'windows/popup.html', 'СК «Хабаровск»'],
+                                          ];
 
-                        ymaps.ready(init);
+                            var cities = [
+                                            [51.229373, 58.4752149, '5',    'Россия'],
+                                            [55.753215, 37.622504,  '10',   'Москва и МО'],
+                                            [56.838011, 60.597465,  '10',   'Екатеринбург'],
+                                            [47.222543, 39.718732,  '10',   'Ростов-на-Дону'],
+                                            [53.195538, 50.101783,  '10',   'Самара'],
+                                            [48.480223, 135.071917, '10',   'Хабаровск'],
+                                            [52.033973, 113.499432, '10',   'Чита'],
+                                          ];
 
-                        var myMap;
+                            ymaps.ready(init);
 
-                        function init() {
-                            myMap = new ymaps.Map('map-big', {
-                                center: [51.229373, 58.475214],
-                                zoom: 5,
-                                controls: []
-                            });
+                            var myMap;
+                            var objectsCollection;
+                            var citiesCollection;
 
-                            myMap.controls.add('zoomControl', {position: {left: 'auto', right: 10, top: 108}});
-                            myMap.behaviors.disable('scrollZoom');
+                            function init() {
+                                myMap = new ymaps.Map('map-big', {
+                                    center: [51.229373, 58.475214],
+                                    zoom: 5,
+                                    controls: []
+                                });
 
-                            var MyBalloonLayout = ymaps.templateLayoutFactory.createClass(
-                                '<div class="popover">' +
-                                    '<a class="close" href="#"></a>' +
-                                    '$[[options.contentLayout]]' +
-                                '</div>', {
-                                    build: function() {
-                                        this.constructor.superclass.build.call(this);
-                                        this._$element = $('.popover', this.getParentElement());
-                                        this.applyElementOffset();
-                                        this._$element.find('.close')
-                                            .on('click', $.proxy(this.onCloseClick, this));
+                                myMap.controls.add('zoomControl', {position: {left: 'auto', right: 10, top: 108}});
+                                myMap.behaviors.disable('scrollZoom');
+
+                                objectsCollection = new ymaps.GeoObjectCollection();
+                                citiesCollection = new ymaps.GeoObjectCollection();
+
+                                var MyBalloonLayout = ymaps.templateLayoutFactory.createClass(
+                                    '<div class="popover">' +
+                                        '<a class="close" href="#"></a>' +
+                                        '$[[options.contentLayout]]' +
+                                    '</div>', {
+                                        build: function() {
+                                            this.constructor.superclass.build.call(this);
+                                            this._$element = $('.popover', this.getParentElement());
+                                            this.applyElementOffset();
+                                            this._$element.find('.close')
+                                                .on('click', $.proxy(this.onCloseClick, this));
+                                        },
+
+                                        clear: function() {
+                                            this._$element.find('.close')
+                                                .off('click');
+                                            this.constructor.superclass.clear.call(this);
+                                        },
+
+                                        onSublayoutSizeChange: function() {
+                                            MyBalloonLayout.superclass.onSublayoutSizeChange.apply(this, arguments);
+                                            if (!this._isElement(this._$element)) {
+                                                return;
+                                            }
+                                            this.applyElementOffset();
+                                            this.events.fire('shapechange');
+                                        },
+
+                                        applyElementOffset: function() {
+                                            this._$element.css({
+                                                left: 41,
+                                                top: -72
+                                        });
                                     },
 
-                                    clear: function() {
-                                        this._$element.find('.close')
-                                            .off('click');
-                                        this.constructor.superclass.clear.call(this);
+                                    onCloseClick: function(e) {
+                                        e.preventDefault();
+                                        this.events.fire('userclose');
                                     },
 
-                                    onSublayoutSizeChange: function() {
-                                        MyBalloonLayout.superclass.onSublayoutSizeChange.apply(this, arguments);
+                                    getShape: function () {
                                         if (!this._isElement(this._$element)) {
-                                            return;
+                                            return MyBalloonLayout.superclass.getShape.call(this);
                                         }
-                                        this.applyElementOffset();
-                                        this.events.fire('shapechange');
+
+                                        var position = this._$element.position();
+
+                                        return new ymaps.shape.Rectangle(new ymaps.geometry.pixel.Rectangle([
+                                            [position.left, position.top], [
+                                                position.left + this._$element[0].offsetWidth,
+                                                position.top + this._$element[0].offsetHeight
+                                            ]
+                                        ]));
                                     },
 
-                                    applyElementOffset: function() {
-                                        this._$element.css({
-                                            left: 48,
-                                            top: -30
-                                    });
-                                },
-
-                                onCloseClick: function(e) {
-                                    e.preventDefault();
-                                    this.events.fire('userclose');
-                                },
-
-                                getShape: function () {
-                                    if (!this._isElement(this._$element)) {
-                                        return MyBalloonLayout.superclass.getShape.call(this);
+                                    _isElement: function(element) {
+                                        return element && element[0];
                                     }
-
-                                    var position = this._$element.position();
-
-                                    return new ymaps.shape.Rectangle(new ymaps.geometry.pixel.Rectangle([
-                                        [position.left, position.top], [
-                                            position.left + this._$element[0].offsetWidth,
-                                            position.top + this._$element[0].offsetHeight
-                                        ]
-                                    ]));
-                                },
-
-                                _isElement: function(element) {
-                                    return element && element[0];
-                                }
-                            });
-
-                            var MyBalloonContentLayout = ymaps.templateLayoutFactory.createClass(
-                                '$[properties.balloonContent]'
-                            );
-
-                            for (var i = 0; i < offices.length; i++) {
-                                var curItem = offices[i];
-                                var myPlacemark = new ymaps.Placemark([curItem[0], curItem[1]], {
-                                    hintContent: curItem[3],
-                                    balloonLink: curItem[2],
-                                    balloonContent: '<div class="popup"><h3>Идет загрузка данных...</h3></div>'
-                                }, {
-                                    balloonShadow: false,
-                                    balloonLayout: MyBalloonLayout,
-                                    balloonContentLayout: MyBalloonContentLayout,
-                                    hideIconOnBalloonOpen: false,
-                                    balloonPanelMaxMapArea: 0,
-                                    iconLayout: 'default#image',
-                                    iconImageHref: 'images/map-icon-big.png',
-                                    iconImageSize: [70, 70],
-                                    iconImageOffset: [-35, -35]
                                 });
-                                myPlacemark.events.add('balloonopen', function(e) {
-                                    var curPlacemark = e.get('target');
-                                    curPlacemark.options.set('iconImageHref', 'images/map-icon-big-hover.png');
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: curPlacemark.properties.get('balloonLink'),
-                                        dataType: 'html',
-                                        cache: false
-                                    }).done(function(html) {
-                                        curPlacemark.properties.set('balloonContent', html);
+
+                                var MyBalloonContentLayout = ymaps.templateLayoutFactory.createClass(
+                                    '$[properties.balloonContent]'
+                                );
+
+                                for (var i = 0; i < offices.length; i++) {
+                                    var curItem = offices[i];
+                                    var myPlacemark = new ymaps.Placemark([curItem[0], curItem[1]], {
+                                        hintContent: curItem[3],
+                                        balloonLink: curItem[2],
+                                        balloonContent: '<div class="popup"><h3>Идет загрузка данных...</h3></div>'
+                                    }, {
+                                        balloonShadow: false,
+                                        balloonLayout: MyBalloonLayout,
+                                        balloonContentLayout: MyBalloonContentLayout,
+                                        hideIconOnBalloonOpen: false,
+                                        balloonPanelMaxMapArea: 0,
+                                        iconLayout: 'default#image',
+                                        iconImageHref: 'images/map-icon-big.png',
+                                        iconImageSize: [48, 64],
+                                        iconImageOffset: [-24, -64]
                                     });
+                                    myPlacemark.events.add('balloonopen', function(e) {
+                                        var curPlacemark = e.get('target');
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: curPlacemark.properties.get('balloonLink'),
+                                            dataType: 'html',
+                                            cache: false
+                                        }).done(function(html) {
+                                            curPlacemark.properties.set('balloonContent', html);
+                                        });
+                                    });
+                                    objectsCollection.add(myPlacemark);
+                                }
+
+                                for (var i = 1; i < cities.length; i++) {
+                                    var curItem = cities[i];
+                                    var myPlacemark = new ymaps.Placemark([curItem[0], curItem[1]], {
+                                        balloonID: i,
+                                    }, {
+                                        balloonShadow: false,
+                                        iconLayout: 'default#image',
+                                        iconImageHref: 'images/map-icon-city.png',
+                                        iconImageSize: [48, 64],
+                                        iconImageOffset: [-24, -64]
+                                    });
+                                    myPlacemark.events.add('click', function(e) {
+                                        var curPlacemark = e.get('target');
+                                        var ID = curPlacemark.properties.get('balloonID');
+                                        $('.map-geography-cities a').eq(ID).trigger('click');
+                                    });
+                                    citiesCollection.add(myPlacemark);
+                                }
+                                myMap.geoObjects.add(citiesCollection);
+
+                                myMap.events.add('boundschange', function(e) {
+                                    var zoom = e.get('newZoom');
+                                    if (zoom > 8) {
+                                        myMap.geoObjects.remove(citiesCollection);
+                                        myMap.geoObjects.add(objectsCollection);
+                                    } else {
+                                        myMap.geoObjects.remove(objectsCollection);
+                                        myMap.geoObjects.add(citiesCollection);
+                                    }
                                 });
-                                myPlacemark.events.add('balloonclose', function(e) {
-                                    var curPlacemark = e.get('target');
-                                    curPlacemark.options.set('iconImageHref', 'images/map-icon-big.png');
-                                });
-                                myMap.geoObjects.add(myPlacemark);
                             }
-                        }
-                    </script>
+                        </script>
+                        <div class="map-geography-cities">
+                            <ul>
+                                <li><a href="#" data-coord1="51.229373" data-coord2="58.475214" data-zoom="5">Россия</a></li>
+                                <li><a href="#" data-coord1="55.753215" data-coord2="37.622504" data-zoom="10">Москва и МО</a></li>
+                                <li><a href="#" data-coord1="56.838011" data-coord2="60.597465" data-zoom="10">Екатеринбург</a></li>
+                                <li><a href="#" data-coord1="47.222543" data-coord2="39.718732" data-zoom="10">Ростов-на-Дону</a></li>
+                                <li><a href="#" data-coord1="53.195538" data-coord2="50.101783" data-zoom="10">Самара</a></li>
+                                <li><a href="#" data-coord1="48.480223" data-coord2="135.071917" data-zoom="10">Хабаровск</a></li>
+                                <li><a href="#" data-coord1="52.033973" data-coord2="113.499432" data-zoom="10">Чита</a></li>
+                            </ul>
+                        </div>
+                    </div>
                     <img src="images/bg-border.png" alt="" class="bg-border" />
                     <img src="images/bg-border-mobile.png" alt="" class="bg-border-mobile" />
                 </div>
@@ -352,9 +410,9 @@
 
                                         var myPlacemark = new ymaps.Placemark([55.69489, 37.461921], {}, {
                                             iconLayout: 'default#image',
-                                            iconImageHref: 'images/map-icon.png',
-                                            iconImageSize: [41, 41],
-                                            iconImageOffset: [-20, -20]
+                                            iconImageHref: 'images/map-icon-big.png',
+                                            iconImageSize: [48, 64],
+                                            iconImageOffset: [-24, -64]
                                         });
                                         myMap1.geoObjects.add(myPlacemark);
                                     }
@@ -435,9 +493,9 @@
 
                                         var myPlacemark = new ymaps.Placemark([56.025824, 37.430696], {}, {
                                             iconLayout: 'default#image',
-                                            iconImageHref: 'images/map-icon.png',
-                                            iconImageSize: [41, 41],
-                                            iconImageOffset: [-20, -20]
+                                            iconImageHref: 'images/map-icon-big.png',
+                                            iconImageSize: [48, 64],
+                                            iconImageOffset: [-24, -64]
                                         });
                                         myMap2.geoObjects.add(myPlacemark);
                                     }
@@ -518,9 +576,9 @@
 
                                         var myPlacemark = new ymaps.Placemark([53.240258, 50.298218], {}, {
                                             iconLayout: 'default#image',
-                                            iconImageHref: 'images/map-icon.png',
-                                            iconImageSize: [41, 41],
-                                            iconImageOffset: [-20, -20]
+                                            iconImageHref: 'images/map-icon-big.png',
+                                            iconImageSize: [48, 64],
+                                            iconImageOffset: [-24, -64]
                                         });
                                         myMap3.geoObjects.add(myPlacemark);
                                     }
@@ -601,9 +659,9 @@
 
                                         var myPlacemark = new ymaps.Placemark([55.864076, 37.649894], {}, {
                                             iconLayout: 'default#image',
-                                            iconImageHref: 'images/map-icon.png',
-                                            iconImageSize: [41, 41],
-                                            iconImageOffset: [-20, -20]
+                                            iconImageHref: 'images/map-icon-big.png',
+                                            iconImageSize: [48, 64],
+                                            iconImageOffset: [-24, -64]
                                         });
                                         myMap4.geoObjects.add(myPlacemark);
                                     }
@@ -684,9 +742,9 @@
 
                                         var myPlacemark = new ymaps.Placemark([47.256962, 39.625711], {}, {
                                             iconLayout: 'default#image',
-                                            iconImageHref: 'images/map-icon.png',
-                                            iconImageSize: [41, 41],
-                                            iconImageOffset: [-20, -20]
+                                            iconImageHref: 'images/map-icon-big.png',
+                                            iconImageSize: [48, 64],
+                                            iconImageOffset: [-24, -64]
                                         });
                                         myMap5.geoObjects.add(myPlacemark);
                                     }

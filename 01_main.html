@@ -331,8 +331,8 @@
 
                                     applyElementOffset: function() {
                                         this._$element.css({
-                                            left: 48,
-                                            top: -30
+                                            left: 41,
+                                            top: -72
                                     });
                                 },
 
@@ -379,12 +379,11 @@
                                     balloonPanelMaxMapArea: 0,
                                     iconLayout: 'default#image',
                                     iconImageHref: 'images/map-icon-big.png',
-                                    iconImageSize: [70, 70],
-                                    iconImageOffset: [-35, -35]
+                                    iconImageSize: [48, 64],
+                                    iconImageOffset: [-24, -64]
                                 });
                                 myPlacemark.events.add('balloonopen', function(e) {
                                     var curPlacemark = e.get('target');
-                                    curPlacemark.options.set('iconImageHref', 'images/map-icon-big-hover.png');
                                     $.ajax({
                                         type: 'POST',
                                         url: curPlacemark.properties.get('balloonLink'),
@@ -393,10 +392,6 @@
                                     }).done(function(html) {
                                         curPlacemark.properties.set('balloonContent', html);
                                     });
-                                });
-                                myPlacemark.events.add('balloonclose', function(e) {
-                                    var curPlacemark = e.get('target');
-                                    curPlacemark.options.set('iconImageHref', 'images/map-icon-big.png');
                                 });
                                 myMap.geoObjects.add(myPlacemark);
                             }

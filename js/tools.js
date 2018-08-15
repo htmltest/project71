@@ -312,6 +312,13 @@ $(document).ready(function() {
         $(this).find('.how-item').css({'width': 100 / $(this).find('.how-item').length + '%'});
     });
 
+    $('.map-geography-cities a').click(function(e) {
+        var curLink = $(this);
+        myMap.setZoom(curLink.data('zoom'));
+        myMap.panTo([curLink.data('coord1'), curLink.data('coord2')], {duration: 250, flying: false, safe: false});
+        e.preventDefault();
+    });
+
 });
 
 $(window).on('resize', function() {
