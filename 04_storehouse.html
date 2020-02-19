@@ -16,6 +16,7 @@
         <script src="js/validation/messages_ru.js"></script>
         <script src="js/fancybox/jquery.fancybox.min.js"></script>
         <script src="js/slick/slick.min.js"></script>
+        <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
         <script src="js/tools.js"></script>
 
         <meta name="viewport" content="width=device-width" />
@@ -263,6 +264,10 @@
                                         <div class="form-label">E-mail <span>*</span></div>
                                         <div class="form-input"><input type="text" name="email" value="" class="required email" /></div>
                                         <div class="form-checkbox"><label><input type="checkbox" name="agreement" value="Y" checked="checked" class="required" /><span></span>Я принимаю условия <a href="#" target="_blank">политики конфиденциальности</a></label></div>
+                                        <div class="form-captcha">
+                                            <div class="g-recaptcha" id="g-recaptcha-1"></div>
+                                            <input type="hidden" class="required" name="hiddenRecaptcha" value="" />
+                                        </div>
                                         <div class="form-submit"><input type="submit" value="Подать заявку на аренду" class="btn-1" /></div>
                                     </form>
                                 </div>

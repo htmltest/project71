@@ -382,3 +382,41 @@ function checkErrors() {
         }
     });
 }
+
+var captchaKey = '6Ldk5DMUAAAAALWRTOM96EQI_0OApr59RQHoMirA';
+
+var onloadCallback = function() {
+    grecaptcha.render('g-recaptcha-1', {
+        'sitekey' : captchaKey,
+        'callback' : verifyCallback1,
+    });
+    grecaptcha.render('g-recaptcha-2', {
+        'sitekey' : captchaKey,
+        'callback' : verifyCallback2,
+    });
+    grecaptcha.render('g-recaptcha-3', {
+        'sitekey' : captchaKey,
+        'callback' : verifyCallback3,
+    });
+};
+
+var verifyCallback1 = function(response) {
+    var curInput = $('#g-recaptcha-1').next();
+    curInput.val(response);
+    curInput.removeClass('error');
+    curInput.parent().find('label.error').remove();
+};
+
+var verifyCallback2 = function(response) {
+    var curInput = $('#g-recaptcha-2').next();
+    curInput.val(response);
+    curInput.removeClass('error');
+    curInput.parent().find('label.error').remove();
+};
+
+var verifyCallback3 = function(response) {
+    var curInput = $('#g-recaptcha-3').next();
+    curInput.val(response);
+    curInput.removeClass('error');
+    curInput.parent().find('label.error').remove();
+};
