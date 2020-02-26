@@ -363,6 +363,28 @@ function initForm(curForm) {
         invalidHandler: function(form, validatorcalc) {
             validatorcalc.showErrors();
             checkErrors();
+        },
+        submitHandler: function(form) {
+            var curForm = $(form);
+
+            $.ajax({
+                type: 'POST',
+                url: curForm.attr('action'),
+                dataType: 'html',
+                processData: false,
+                contentType: false,
+                data: new FormData(form),
+                cache: false
+            }).done(function(html) {
+                for (var i = 0; i < captchaArray.length; i++) {
+                    grecaptcha.reset(captchaArray[i][0]);
+                    var curInput = captchaArray[i][1].next();
+                    curInput.val('');
+                    curForm.trigger('reset');
+                    curForm.find('.form-file-name').html('');
+                }
+                alert('Форма отправлена');
+            });
         }
     });
 }
@@ -384,39 +406,25 @@ function checkErrors() {
 }
 
 var captchaKey = '6Ldk5DMUAAAAALWRTOM96EQI_0OApr59RQHoMirA';
+var captchaArray = [];
 
 var onloadCallback = function() {
-    grecaptcha.render('g-recaptcha-1', {
-        'sitekey' : captchaKey,
-        'callback' : verifyCallback1,
-    });
-    grecaptcha.render('g-recaptcha-2', {
-        'sitekey' : captchaKey,
-        'callback' : verifyCallback2,
-    });
-    grecaptcha.render('g-recaptcha-3', {
-        'sitekey' : captchaKey,
-        'callback' : verifyCallback3,
+    $('.g-recaptcha').each(function() {
+        var newCaptcha = grecaptcha.render(this, {
+            'sitekey' : captchaKey,
+            'callback' : verifyCallback,
+        });
+        captchaArray.push([newCaptcha, $(this)]);
     });
 };
 
-var verifyCallback1 = function(response) {
-    var curInput = $('#g-recaptcha-1').next();
-    curInput.val(response);
-    curInput.removeClass('error');
-    curInput.parent().find('label.error').remove();
-};
-
-var verifyCallback2 = function(response) {
-    var curInput = $('#g-recaptcha-2').next();
-    curInput.val(response);
-    curInput.removeClass('error');
-    curInput.parent().find('label.error').remove();
-};
-
-var verifyCallback3 = function(response) {
-    var curInput = $('#g-recaptcha-3').next();
-    curInput.val(response);
-    curInput.removeClass('error');
-    curInput.parent().find('label.error').remove();
+var verifyCallback = function(response) {
+    for (var i = 0; i < captchaArray.length; i++) {
+        if (grecaptcha.getResponse(captchaArray[i][0])) {
+            var curInput = captchaArray[i][1].next();
+            curInput.val(response);
+            curInput.removeClass('error');
+            curInput.parent().find('label.error').remove();
+        }
+    }
 };
