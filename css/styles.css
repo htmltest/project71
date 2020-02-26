@@ -867,6 +867,7 @@ header:after {content:"."; display:block; clear:both; visibility:hidden; height:
 .geography-item-feedback-form .form-submit .btn-1:hover {background:#ffba13}
 .geography-item-feedback-form .form-checkbox {float:left; width:100%; margin:10px 0 0 0; font-size:12px}
 .geography-item-feedback-form .form-checkbox span {top:1px}
+.geography-item-feedback-form .form-captcha {float:left; width:100%; margin:10px 0 0 0}
 
 @media (max-width:1199px) {
     .geography-item-content {float:none; width:auto; padding:0}
@@ -1219,6 +1220,7 @@ footer {background:#f7f7f7; margin:-300px 0 0 0; position:relative; min-width:48
 .footer-feedback-form .form-submit .btn-1:hover {background:#ffba13}
 .footer-feedback-form .form-checkbox {float:left; width:100%; margin:10px 0 0 0; font-size:12px}
 .footer-feedback-form .form-checkbox span {top:1px}
+.footer-feedback-form .form-captcha {float:left; width:100%; margin:10px 0 0 0}
 
 @media (max-width:1199px) {
     .footer-feedback {float:none; margin:30px 0 0 0; width:auto}
